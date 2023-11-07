@@ -4,6 +4,7 @@
     "strict": true,
     "declaration": true,
     "declarationDir": "dist/types/",
+    "moduleResolution": "Bundler",
     "jsx": "react",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
