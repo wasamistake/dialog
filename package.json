@@ -1,8 +1,27 @@
 {
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.esm.js",
+  "types": "dist/types/index.d.ts",
   "scripts": {
+    "prebuild": "rm -rf dist/",
+    "build": "rollup --config",
     "format": "prettier . --write --ignore-unknown"
   },
+  "peerDependencies": {
+    "react": "18",
+    "react-dom": "18"
+  },
   "devDependencies": {
-    "prettier": "3.0.3"
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@types/react": "^18.2.36",
+    "@types/react-dom": "^18.2.14",
+    "prettier": "3.0.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rollup": "^4.3.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.2.2"
   }
 }
