@@ -7,6 +7,7 @@
     "prebuild": "rm -rf dist/",
     "build": "rollup --config",
     "format": "prettier . --write --ignore-unknown",
+    "lint": "eslint . --cache --ignore-path .gitignore",
     "test": "vitest"
   },
   "peerDependencies": {
@@ -21,6 +22,13 @@
     "@testing-library/user-event": "^14.5.1",
     "@types/react": "^18.2.36",
     "@types/react-dom": "^18.2.14",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
+    "eslint": "^8.53.0",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-testing-library": "^6.1.0",
     "jsdom": "^22.1.0",
     "prettier": "3.0.3",
     "react": "^18.2.0",
