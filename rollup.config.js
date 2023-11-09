@@ -22,7 +22,12 @@ export default defineConfig({
   external: ['react', 'react-dom'],
   plugins: [
     typescript({
-      exclude: ['**/*.test.{ts,tsx}', 'vitest.config.ts', 'vitest.setup.ts'],
+      exclude: [
+        '**/*.test.{ts,tsx}',
+        'vitest.config.ts',
+        'vitest.setup.ts',
+        '**/*.stories.{ts,tsx}',
+      ],
     }),
     terser(),
   ],
