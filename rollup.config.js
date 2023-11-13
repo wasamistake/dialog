@@ -6,7 +6,7 @@ import terser from '@rollup/plugin-terser'
 const pkg = JSON.parse(readFileSync(new URL('package.json', import.meta.url)))
 
 export default defineConfig({
-  input: 'src/index.ts',
+  input: 'src/index.tsx',
   output: [
     {
       file: pkg.main,
