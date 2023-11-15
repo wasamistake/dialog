@@ -1,0 +1,40 @@
+html {
+  --dialog-background: whitesmoke;
+  --dialog-text-color: #151515;
+}
+
+html[data-theme='dark'] {
+  --dialog-background: #151515;
+  --dialog-text-color: whitesmoke;
+}
+
+button {
+  padding: 5px;
+}
+
+p {
+  margin-bottom: 10px;
+}
+
+.dialog__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: saturate(2) blur(5px);
+  display: grid;
+  place-items: center;
+  z-index: 2;
+}
+
+.dialog__body {
+  width: 420px;
+  padding: 20px;
+  background: var(--dialog-background);
+  color: var(--dialog-text-color);
+  border-radius: 4px;
+  box-shadow: 0px 12px 24px 0px rgba(0, 0, 0, 0.2);
+}
+
+.dialog__description {
+  margin: 30px 0;
+}
