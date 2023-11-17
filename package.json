@@ -1,8 +1,13 @@
 {
+  "name": "@wasamistake/dialog",
+  "description": "Bare-bones, unstyled, ARIA compliant dialog component for React.",
   "type": "module",
   "main": "dist/index.cjs",
   "module": "dist/index.esm.js",
   "types": "dist/types/index.d.ts",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "prepare": "husky install",
     "prebuild": "rm -rf dist/",
@@ -52,5 +57,21 @@
     "tslib": "^2.6.2",
     "typescript": "^5.2.2",
     "vitest": "^0.34.6"
+  },
+  "keywords": [
+    "dialog",
+    "a11y",
+    "react",
+    "wai-aria"
+  ],
+  "author": "wasamistake",
+  "license": "MIT",
+  "homepage": "https://github.com/wasamistake/dialog#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wasamistake/dialog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wasamistake/dialog/issues"
   }
 }
