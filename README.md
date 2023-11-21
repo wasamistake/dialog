@@ -18,7 +18,9 @@ For more information, check the official guide: https://www.w3.org/WAI/ARIA/apg/
 
 ## Usage
 
-Once the package has been installed with `npm install @wasamistake/dialog`, import `Dialog`, `Backdrop`, and `Body` from `@wasamistake/dialog`.
+First, install the package with `npm install --save-exact @wasamistake/dialog`. As there will probably be breaking changes before version 1, `--save-exact` will minimize the incidence of problems related to that.
+
+Once the package has been installed, import `Dialog`, `Backdrop`, and `Body` from `@wasamistake/dialog`.
 
 A minimal implementation will look something like this:
 
