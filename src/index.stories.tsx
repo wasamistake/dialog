@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { Dialog, Backdrop, Body } from '.'
 import './index.stories.css'
@@ -210,6 +210,54 @@ export const Nesting: Story = {
                 Open 3rd dialog
               </button>
               <button onClick={close2}>Close 2nd dialog</button>
+            </Body>
+          </Backdrop>
+        </Dialog>
+      </>
+    )
+  },
+}
+
+export const MountTarget: Story = {
+  name: 'Example: Custom Mount Target',
+  render: function ExampleDialog() {
+    const [opened, setOpened] = useState(false)
+
+    const open = () => setOpened(true)
+    const close = () => setOpened(false)
+
+    useEffect(() => {
+      if (document.getElementById('mount-target') === null) {
+        const mountTarget = document.createElement('div')
+        mountTarget.id = 'mount-target'
+        document.body.appendChild(mountTarget)
+      }
+    }, [])
+
+    return (
+      <>
+        <button onClick={open}>Open dialog</button>
+
+        <Dialog
+          opened={opened}
+          close={close}
+          container={document.getElementById('mount-target')}
+        >
+          <Backdrop className='dialog__backdrop'>
+            <Body aria-labelledby='dialog-label' className='dialog__body'>
+              <h2 id='dialog-label'>Dialog</h2>
+
+              <div className='dialog__description'>
+                <p>
+                  A dialog is a window overlaid on either the primary window or
+                  another dialog window.
+                </p>
+                <a href='https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/'>
+                  Read more
+                </a>
+              </div>
+
+              <button onClick={close}>Got it!</button>
             </Body>
           </Backdrop>
         </Dialog>

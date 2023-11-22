@@ -79,13 +79,14 @@ Besides the props listed below, any native attribute passed into a component wil
 
 The `<Dialog>` component controls everything but doesn't render any element per se.
 
-| Name                  | Description                                                                                                                                  | Default value |
-| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| `children`\*          | Anything React can render.                                                                                                                   | -             |
-| `opened`\*            | The initial dialog state. Either opened (true) or closed (false).                                                                            | -             |
-| `close`\*             | A function that should trigger the dialog close.                                                                                             | -             |
-| `closeOnClickOutside` | Whether the dialog should close whenever there is a click outside of it.                                                                     | `true`        |
-| `placeFinalFocusAt`   | A ref object that points to the element that will receive focus on dialog close. Falls back to the last active element if none is specified. | -             |
+| Name                  | Description                                                                                                                                  | Default value   |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| `children`\*          | Anything React can render.                                                                                                                   | -               |
+| `opened`\*            | The initial dialog state. Either opened (true) or closed (false).                                                                            | -               |
+| `close`\*             | A function that should trigger the dialog close.                                                                                             | -               |
+| `closeOnClickOutside` | Whether the dialog should close whenever there is a click outside of it.                                                                     | `true`          |
+| `placeFinalFocusAt`   | A ref object that points to the element that will receive focus on dialog close. Falls back to the last active element if none is specified. | -               |
+| `container`           | Where to render the dialog. By default, it gets appended to the body element.                                                                | `document.body` |
 
 Props marked with \* are required.
 
@@ -242,6 +243,39 @@ function Wrapper() {
             <h2 id='dialog3-label'>3rd dialog title</h2>
             <div>Some content...</div>
             <button onClick={close3}>Close 3rd dialog</button>
+          </Body>
+        </Backdrop>
+      </Dialog>
+    </>
+  )
+}
+```
+
+## Example: Custom mount target
+
+To render the dialog at a place other than the `body` element, provide a mount target to the `container` prop.
+
+```tsx
+function Wrapper() {
+  const [opened, setOpened] = useState(false)
+
+  const open = () => setOpened(true)
+  const close = () => setOpened(false)
+
+  return (
+    <>
+      <button onClick={open}>Open dialog</button>
+
+      <Dialog
+        opened={opened}
+        close={close}
+        container={document.getElementById('mount-target-id')}
+      >
+        <Backdrop>
+          <Body aria-labelledby='dialog-label'>
+            <h2 id='dialog-label'>Dialog title</h2>
+            <div>Some content</div>
+            <button onClick={close}>Close dialog</button>
           </Body>
         </Backdrop>
       </Dialog>

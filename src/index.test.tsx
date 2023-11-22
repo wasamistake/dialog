@@ -23,6 +23,32 @@ test('Element attributes are forwarded', () => {
   expect(elements).toHaveLength(2)
 })
 
+test('The dialog can be rendered at a custom location', () => {
+  const mountTarget = document.createElement('div')
+
+  const { rerender } = render(
+    <Dialog opened close={() => {}}>
+      <Body aria-label='A dialog'>
+        <button>Close dialog</button>
+      </Body>
+    </Dialog>,
+    { container: document.body.appendChild(mountTarget) },
+  )
+
+  expect(document.body).toContainElement(screen.getByRole('dialog'))
+  expect(mountTarget).not.toContainElement(screen.getByRole('dialog'))
+
+  rerender(
+    <Dialog opened close={() => {}} container={mountTarget}>
+      <Body aria-label='A dialog'>
+        <button>Close dialog</button>
+      </Body>
+    </Dialog>,
+  )
+
+  expect(mountTarget).toContainElement(screen.getByRole('dialog'))
+})
+
 test('Clicking outside is handled', async () => {
   const user = userEvent.setup()
 

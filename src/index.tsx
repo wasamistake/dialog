@@ -28,6 +28,12 @@ type DialogProps = {
    */
   closeOnClickOutside?: boolean
   /**
+   * Where to render the dialog. By default, it gets appended
+   * to the body element.
+   * @default document.body
+   */
+  container?: Element | DocumentFragment | null
+  /**
    * The initial dialog state. Either opened (true) or closed (false).
    */
   opened: boolean
@@ -49,6 +55,7 @@ export function Dialog(props: DialogProps) {
     children,
     close,
     closeOnClickOutside = true,
+    container,
     opened,
     placeFinalFocusAt,
   } = props
@@ -215,7 +222,7 @@ export function Dialog(props: DialogProps) {
     <DialogContext.Provider value={{ dialogRef }}>
       {children}
     </DialogContext.Provider>,
-    document.body,
+    container ?? document.body,
   )
 }
 
