@@ -283,3 +283,9 @@ function Wrapper() {
   )
 }
 ```
+
+## Contributing
+
+Found something out of place or have an idea? Please open an issue, and let's discuss that.
+
+Remember to look for duplicates before ;)
