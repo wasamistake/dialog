@@ -3,7 +3,7 @@
   "description": "Bare-bones, unstyled, ARIA compliant dialog component for React.",
   "type": "module",
   "main": "dist/index.cjs",
-  "module": "dist/index.esm.js",
+  "module": "dist/index.js",
   "types": "dist/types/index.d.ts",
   "files": [
     "dist/"
