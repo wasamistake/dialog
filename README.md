@@ -1,5 +1,9 @@
 # Dialog
 
+<div align='center'>
+  <img src='cover.png' alt='A cover image showing three dialogs.' />
+</div>
+
 A dialog is a window presented over the primary or another dialog window, usually used to show quick information or prompt the user.
 
 This solution complies with the Dialog (Modal) pattern as described in the ARIA Authoring Practices Guide (APG):
