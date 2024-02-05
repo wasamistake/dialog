@@ -13,6 +13,7 @@ type ActiveElement = Element | null
  */
 const dialogStack = new Map<HTMLDivElement, [CloseCallback, ActiveElement]>()
 
+/** @internal */
 export type DialogRef = React.MutableRefObject<HTMLDivElement | null>
 
 type DialogProps = {
