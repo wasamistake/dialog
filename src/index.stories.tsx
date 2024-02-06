@@ -238,11 +238,7 @@ export const MountTarget: Story = {
       <>
         <button onClick={open}>Open dialog</button>
 
-        <Dialog
-          opened={opened}
-          close={close}
-          container={document.getElementById('mount-target')}
-        >
+        <Dialog opened={opened} close={close} container='#mount-target'>
           <Backdrop className='dialog__backdrop'>
             <Body aria-labelledby='dialog-label' className='dialog__body'>
               <h2 id='dialog-label'>Dialog</h2>

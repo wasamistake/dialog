@@ -90,7 +90,7 @@ The `<Dialog>` component controls everything but doesn't render any element per 
 | `close`\*             | A function that should trigger the dialog close.                                                                                             | -               |
 | `closeOnClickOutside` | Whether the dialog should close whenever there is a click outside of it.                                                                     | `true`          |
 | `placeFinalFocusAt`   | A ref object that points to the element that will receive focus on dialog close. Falls back to the last active element if none is specified. | -               |
-| `container`           | Where to render the dialog. By default, it gets appended to the body element.                                                                | `document.body` |
+| `container`           | Where to render the dialog, e.g., #mount-target. By default, it gets appended to the body element.                                           | `document.body` |
 
 Props marked with \* are required.
 
@@ -270,11 +270,7 @@ function Wrapper() {
     <>
       <button onClick={open}>Open dialog</button>
 
-      <Dialog
-        opened={opened}
-        close={close}
-        container={document.getElementById('mount-target-id')}
-      >
+      <Dialog opened={opened} close={close} container='#mount-target-id'>
         <Backdrop>
           <Body aria-labelledby='dialog-label'>
             <h2 id='dialog-label'>Dialog title</h2>

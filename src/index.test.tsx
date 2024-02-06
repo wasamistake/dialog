@@ -25,6 +25,7 @@ test('Element attributes are forwarded', () => {
 
 test('The dialog can be rendered at a custom location', () => {
   const mountTarget = document.createElement('div')
+  mountTarget.id = 'mount-target'
 
   const { rerender } = render(
     <Dialog opened close={() => {}}>
@@ -39,7 +40,7 @@ test('The dialog can be rendered at a custom location', () => {
   expect(mountTarget).not.toContainElement(screen.getByRole('dialog'))
 
   rerender(
-    <Dialog opened close={() => {}} container={mountTarget}>
+    <Dialog opened close={() => {}} container='#mount-target'>
       <Body aria-label='A dialog'>
         <button>Close dialog</button>
       </Body>
