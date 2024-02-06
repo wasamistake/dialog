@@ -50,6 +50,21 @@ test('The dialog can be rendered at a custom location', () => {
   expect(mountTarget).toContainElement(screen.getByRole('dialog'))
 })
 
+test('Server-side rendering is handled', () => {
+  vi.spyOn(global, 'Error')
+
+  render(
+    <Dialog opened close={() => {}}>
+      <Body aria-label='A dialog'>
+        <button>Close dialog</button>
+      </Body>
+    </Dialog>,
+    { hydrate: true },
+  )
+
+  expect(Error).not.toHaveBeenCalled()
+})
+
 test('Clicking outside is handled', async () => {
   const user = userEvent.setup()
 

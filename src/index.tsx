@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { DialogContext } from './index.context'
 import { getAllDescendantElements, isKeyboardFocusable } from './utils'
@@ -61,11 +61,17 @@ export function Dialog(props: DialogProps) {
     placeFinalFocusAt,
   } = props
 
+  // Prevents SSR errors when trying to access the DOM, e.g., `document.body`.
+  // In the future, this may be removed in favor of a recommendation for
+  // dynamic imports with `{ ssr: false }`.
+  const [onClient, setOnClient] = useState(false)
+  useEffect(() => setOnClient(true), [])
+
   const dialogRef: DialogRef = useRef(null)
 
   // Handles the dialog stack.
   useEffect(() => {
-    if (dialogRef.current === null) return
+    if (!onClient || dialogRef.current === null) return
 
     dialogStack.set(dialogRef.current, [close, document.activeElement])
 
@@ -75,11 +81,11 @@ export function Dialog(props: DialogProps) {
         dialogStack.delete(dialog)
       }
     })
-  }, [close])
+  }, [onClient, close])
 
   // Handles initial focus placement.
   useEffect(() => {
-    if (!opened || dialogRef.current === null) return
+    if (!opened || !onClient || dialogRef.current === null) return
 
     const dialog = dialogRef.current
 
@@ -108,11 +114,11 @@ export function Dialog(props: DialogProps) {
     console.error(
       "Couldn't find any focusable element. It's strongly recommended that a dialog includes at least a button that closes it.",
     )
-  }, [opened])
+  }, [opened, onClient])
 
   // Handles final focus placement.
   useEffect(() => {
-    if (!opened) return
+    if (!opened || !onClient) return
 
     const uppermostDialogTuple = Array.from(dialogStack.values()).at(-1)
     const activeElementBeforeDialogMount = uppermostDialogTuple?.[1]
@@ -126,11 +132,11 @@ export function Dialog(props: DialogProps) {
         finalFocusTarget.focus()
       }
     }
-  }, [opened, placeFinalFocusAt])
+  }, [opened, onClient, placeFinalFocusAt])
 
   // Handles focus trapping.
   useEffect(() => {
-    if (!opened || dialogRef.current === null) return
+    if (!opened || !onClient || dialogRef.current === null) return
 
     const dialog = dialogRef.current
 
@@ -173,10 +179,12 @@ export function Dialog(props: DialogProps) {
 
     document.addEventListener('keydown', trapFocus)
     return () => document.removeEventListener('keydown', trapFocus)
-  }, [opened])
+  }, [opened, onClient])
 
   // Handles ESC key.
   useEffect(() => {
+    if (!onClient) return
+
     const closeDialog = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         const uppermostDialogTuple = Array.from(dialogStack.values()).at(-1)
@@ -190,11 +198,11 @@ export function Dialog(props: DialogProps) {
 
     document.addEventListener('keydown', closeDialog)
     return () => document.removeEventListener('keydown', closeDialog)
-  }, [close])
+  }, [onClient, close])
 
   // Handles click outside.
   useEffect(() => {
-    if (!closeOnClickOutside || dialogRef.current === null) return
+    if (!onClient || !closeOnClickOutside || dialogRef.current === null) return
 
     const dialog = dialogRef.current
 
@@ -215,16 +223,18 @@ export function Dialog(props: DialogProps) {
 
     document.addEventListener('click', closeDialog, true)
     return () => document.removeEventListener('click', closeDialog, true)
-  }, [close, closeOnClickOutside])
+  }, [onClient, close, closeOnClickOutside])
 
   if (!opened) return null
 
-  return ReactDOM.createPortal(
-    <DialogContext.Provider value={{ dialogRef }}>
-      {children}
-    </DialogContext.Provider>,
-    document.querySelector(container ?? 'body')!,
-  )
+  return onClient
+    ? ReactDOM.createPortal(
+        <DialogContext.Provider value={{ dialogRef }}>
+          {children}
+        </DialogContext.Provider>,
+        document.querySelector(container ?? 'body')!,
+      )
+    : null
 }
 
 export { Backdrop, Body } from './parts'
