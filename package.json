@@ -1,5 +1,6 @@
 {
   "name": "@wasamistake/dialog",
+  "version": "0.1.0",
   "description": "Bare-bones, unstyled, ARIA compliant dialog component for React.",
   "type": "module",
   "main": "dist/index.cjs",
