@@ -284,6 +284,82 @@ function Wrapper() {
 }
 ```
 
+## Example: Mount/unmount animation
+
+There are various ways to implement animations. Following is an example using the traditional CSS keyframes and classes approach.
+
+Suppose you have the following CSS:
+
+```css
+@keyframes scale {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.4, 0.4, 0.4);
+  }
+  100% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.animate-mount {
+  animation: scale 0.2s ease both;
+}
+
+.animate-unmount {
+  animation: scale 0.2s ease both reverse;
+}
+```
+
+The dialog mount is animated as would any other static element, i.e., by adding a class with the appropriate animation declarations.
+
+The dialog unmount is a little trickier. It involves playing the animation and changing the component state when done, which we achieve by tweaking the dialog's close callback.
+
+```tsx
+function Wrapper() {
+  const [opened, setOpened] = useState(false)
+
+  const open = () => setOpened(true)
+
+  const close = () => {
+    const dialog = document.getElementById('dialog')
+
+    if (dialog) {
+      dialog.addEventListener('animationend', () => setOpened(false), {
+        // Cleans up the event listener as soon as it is executed once.
+        once: true,
+      })
+
+      dialog.classList.remove('animate-mount')
+      // Forces the browser to reflow and apply the new changes right away.
+      // See: https://stackoverflow.com/q/60686489
+      void dialog.offsetWidth
+      dialog.classList.add('animate-unmount')
+    }
+  }
+
+  return (
+    <>
+      <button onClick={open}>Open dialog</button>
+
+      <Dialog opened={opened} close={close}>
+        <Backdrop>
+          <Body
+            aria-labelledby='dialog-label'
+            className='animate-mount'
+            id='dialog'
+          >
+            <h2 id='dialog-label'>Dialog title</h2>
+            <div>Some content</div>
+            <button onClick={close}>Close dialog</button>
+          </Body>
+        </Backdrop>
+      </Dialog>
+    </>
+  )
+}
+```
+
 ## Contributing
 
 Found something out of place or have an idea? Please open an issue, and let's discuss that.

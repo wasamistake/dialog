@@ -261,3 +261,59 @@ export const MountTarget: Story = {
     )
   },
 }
+
+export const Transition: Story = {
+  name: 'Example: Mount/Unmount Animation',
+  render: function ExampleDialog() {
+    const [opened, setOpened] = useState(false)
+
+    const open = () => setOpened(true)
+
+    const close = () => {
+      const dialog = document.getElementById('dialog')
+
+      if (dialog) {
+        dialog.addEventListener('animationend', () => setOpened(false), {
+          // Cleans up the event listener as soon as it is executed once.
+          once: true,
+        })
+
+        dialog.classList.remove('animate-mount')
+        // Forces the browser to reflow and apply the new changes right away.
+        // See: https://stackoverflow.com/q/60686489
+        void dialog.offsetWidth
+        dialog.classList.add('animate-unmount')
+      }
+    }
+
+    return (
+      <>
+        <button onClick={open}>Open dialog</button>
+
+        <Dialog opened={opened} close={close}>
+          <Backdrop className='dialog__backdrop'>
+            <Body
+              aria-labelledby='dialog-label'
+              className='dialog__body animate-mount'
+              id='dialog'
+            >
+              <h2 id='dialog-label'>Dialog</h2>
+
+              <div className='dialog__description'>
+                <p>
+                  A dialog is a window overlaid on either the primary window or
+                  another dialog window.
+                </p>
+                <a href='https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/'>
+                  Read more
+                </a>
+              </div>
+
+              <button onClick={close}>Got it!</button>
+            </Body>
+          </Backdrop>
+        </Dialog>
+      </>
+    )
+  },
+}
