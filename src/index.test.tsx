@@ -23,6 +23,18 @@ test('Element attributes are forwarded', () => {
   expect(elements).toHaveLength(2)
 })
 
+test('An error is thrown if a component is not wrapped by <DialogContext.Provider>', () => {
+  expect(() =>
+    render(
+      <Backdrop>
+        <Body aria-label='A dialog'>
+          <button>Close dialog</button>
+        </Body>
+      </Backdrop>,
+    ),
+  ).toThrowError(/Did you forget/)
+})
+
 test('The dialog can be rendered at a custom location', () => {
   const mountTarget = document.createElement('div')
   mountTarget.id = 'mount-target'

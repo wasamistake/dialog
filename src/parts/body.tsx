@@ -1,11 +1,13 @@
-import React, { useContext } from 'react'
-import { DialogContext } from '../index.context'
+import React from 'react'
+import { useDialogContext } from '../index.context'
 
 type BodyProps = React.ComponentPropsWithRef<'div'>
 
 export const Body = React.forwardRef<HTMLDivElement, BodyProps>(
   (props, ref) => {
-    const { dialogRef } = useContext(DialogContext)
+    const { dialogRef } = useDialogContext(
+      'Did you forget to wrap <Body> inside <Dialog>?',
+    )
 
     if (
       props['aria-label'] === undefined &&
